@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+}
+
+.header {
+    background-image: url(../src/image/Header.jpg);
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 100px;
+    color: white;
+}
+
+
+

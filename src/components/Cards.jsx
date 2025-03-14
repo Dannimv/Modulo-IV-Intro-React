@@ -14,8 +14,10 @@ const CardPizza = ({ name, price, ingredients, img }) => {
         </Card.Text>
         <Card.Text className='text-center'>
             <strong>Precio: ${price.toLocaleString()}</strong></Card.Text>
+            <div className='d-flex justify-content-between'>
         <Button variant="outline-dark" className='me-3'>Ver más👀</Button>
         <Button variant="dark">Añadir🛒</Button>
+        </div>
       </Card.Body>
     </Card>
   )

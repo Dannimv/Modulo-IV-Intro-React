@@ -21,8 +21,8 @@ const NavBar = () => {
             </>
             ) : (
             <>
-            <Nav.Link eventKey='login' href="#link">🔐Login</Nav.Link>
-            <Nav.Link eventKey='register' href="#link">🔐Register</Nav.Link>
+            <Nav.Link eventKey='login' href="#Login" to='/Login' >🔐Login</Nav.Link>
+            <Nav.Link eventKey='register' href="#Register" to='/Register'>🔐Register</Nav.Link>
             </>
             )}
             </Nav>

@@ -27,9 +27,9 @@ const Register = () => {
                     return
                 }
       
-                setError(false)
+                setErrorRegister(false)
                 setEmailRegister('')
-                setPaswordRegister('')
+                setPasswordRegister('')
                 setShowRegister(false)
                 setSmShowRegister(true)
                 console.log('Formulario enviado')
@@ -40,8 +40,8 @@ const Register = () => {
                 setEmailRegister(e.target.value)
             }
         
-            const handleChangeContraseñaRegister = (e) => {
-                setContraseñaRegister(e.target.value)
+            const handleChangePasswordRegister = (e) => {
+                setPasswordRegister(e.target.value)
             }
     
         const handleCloseRegister = () => {
@@ -50,7 +50,7 @@ const Register = () => {
 
   return (
     <div>
-      <Modal show={show} onHide={handleCloseRegister}>
+      <Modal show={showRegister} onHide={handleCloseRegister}>
 <form action="submit" onSubmit={handleSubmitRegister}>
 <Modal.Header closeButton>
   <Modal.Title>Registro 🔐</Modal.Title>
@@ -75,7 +75,7 @@ const Register = () => {
         <Form.Control type="password" 
         placeholder="Ingrese su contraseña"
         value={passwordRegister}
-        onChange={(e) => handleChangeContraseñaRegister (e)} />
+        onChange={(e) => handleChangePasswordRegister (e)} />
       </Form.Group>
       {passwordRegister && passwordRegister.length < 6 ? <p className='text-danger'>La contraseña debe tener al menos 6 caracteres</p> : null }
   

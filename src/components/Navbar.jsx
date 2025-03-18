@@ -259,7 +259,7 @@ const NavBar = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-sm">
-            Bienvenido
+            Registro Exitoso
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>Pizzeria Mamma Mia 🍕</Modal.Body>

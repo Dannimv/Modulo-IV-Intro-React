@@ -7,7 +7,6 @@ const Register = ({ showRegister, handleCloseRegister }) => {
   const [emailRegister, setEmailRegister] = useState("");
   const [passwordRegister, setPasswordRegister] = useState("");
   const [errorRegister, setErrorRegister] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
   const [smShowRegister, setSmShowRegister] = useState(false);
 
   const handleSubmitRegister = (e) => {
@@ -27,6 +26,7 @@ const Register = ({ showRegister, handleCloseRegister }) => {
     setPasswordRegister("");
     handleCloseRegister(); // Cierra el modal
     setSmShowRegister(true);
+    showRegister();
     console.log("Formulario enviado");
   };
 
@@ -38,8 +38,10 @@ const Register = ({ showRegister, handleCloseRegister }) => {
         handleSubmitRegister={handleSubmitRegister}
         emailRegister={emailRegister}
         passwordRegister={passwordRegister}
-        handleChangeEmailRegister={setEmailRegister(e.target.value)}
-        handleChangePasswordRegister={setPasswordRegister(e.target.value)}
+        handleChangeEmailRegister={(e) => setEmailRegister(e.target.value)}
+        handleChangePasswordRegister={(e) =>
+          setPasswordRegister(e.target.value)
+        }
         errorRegister={errorRegister}
       />
 

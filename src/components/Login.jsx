@@ -1,6 +1,3 @@
-// Profesor Diego, hice este componente en el Navbar para poder abrirlo como una alerta con un modal de bootstrap
-
-import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 import LoginModal from "./LoginModal";

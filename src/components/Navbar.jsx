@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Login from './Login';
-
+import LoginModal from './LoginModal';
 
 const NavBar = () => {
     const total = 25000;
@@ -139,6 +139,7 @@ const NavBar = () => {
       
     </Navbar>
     <Login/>
+    <LoginModal/>
 
 {/* COMPONENTE LOGIN */}
 <Modal show={show} onHide={handleClose}>

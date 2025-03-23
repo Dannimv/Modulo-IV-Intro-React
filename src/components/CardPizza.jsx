@@ -1,7 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-
 const CardPizza = ({ name, price, ingredients, img }) => {
   return (
     <Card style={{ width: "18rem" }} className='m-4'>
@@ -10,7 +9,8 @@ const CardPizza = ({ name, price, ingredients, img }) => {
         <Card.Title>{name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted fs-5 text-center">Ingredientes:</Card.Subtitle>
         <Card.Text className='text-center'>
-          🍕{ingredients.join(", ")}
+              {ingredients.map((ingrediente, i) =>
+              <li key={i} className='list-unstyled'>🍕{ingrediente}</li>)}
         </Card.Text>
         <Card.Text className='text-center'>
             <strong>Precio: ${price.toLocaleString()}</strong></Card.Text>

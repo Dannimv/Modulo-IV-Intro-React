@@ -1,6 +1,6 @@
 import Header from '../components/Header'
 import CardPizza from '../components/CardPizza';
-import { pizzas } from '../../../apoyo_hito_3/pizzas';
+import { pizzas } from '../../pizzas';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 

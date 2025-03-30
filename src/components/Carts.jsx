@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { pizzaCart } from '../../../apoyo_hito_3/pizzas'
+import { pizzaCart } from '../../pizzas'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

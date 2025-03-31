@@ -2,10 +2,7 @@ import React from 'react'
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { useState, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
 
 const Pizza = () => {
     const [cartaPizza, setCartaPizza] = useState ([])
@@ -25,11 +22,8 @@ const Pizza = () => {
   return (
     
     <div className='cards container d-flex justify-content-space-around flex-wrap mt-4'>
-        {/* <Container>
-     <Row xs={1} md={3}> */}
         {cartaPizza.map((item) => (
             <div key={item.id}>
-       {/* <Col key={item.id}>  */}
       <Card style={{ width: '20rem' }} className='mx-3'>
       <Card.Img variant="top" src={item.img}/>
       <Card.Body>
@@ -48,10 +42,7 @@ const Pizza = () => {
       </Card.Body>
     </Card>
     </div>
-    // </Col>
     ))}
-    {/* </Row>
-    </Container> */}
     </div>
    
   )

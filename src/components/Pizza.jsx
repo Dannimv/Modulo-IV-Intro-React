@@ -11,9 +11,9 @@ const Pizza = () => {
     const [cartaPizza, setCartaPizza] = useState ([])
         console.log('componente montado')
       const getCartaPizza = async () => {
-        const response = await fetch ('http://localhost:5000/api/pizzas')
+        const response = await fetch ('http://localhost:5000/api/pizzas/p001')
         const data = await response.json()
-        setCartaPizza([...data])
+        setCartaPizza([data])
       }
     
       useEffect(()=> {
@@ -30,7 +30,7 @@ const Pizza = () => {
         {cartaPizza.map((item) => (
             <div key={item.id}>
        {/* <Col key={item.id}>  */}
-      <Card style={{ width: '18rem' }} className='mx-3'>
+      <Card style={{ width: '20rem' }} className='mx-3'>
       <Card.Img variant="top" src={item.img}/>
       <Card.Body>
         <Card.Title>{item.name}</Card.Title>
@@ -40,7 +40,7 @@ const Pizza = () => {
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroup.Item><strong>Ingredientes</strong> 
-          <p>{item.ingredients.join(',')}</p></ListGroup.Item>
+          <p>{item.ingredients.join(' , ')}</p></ListGroup.Item>
         <ListGroup.Item className='text-center'>{item.desc}</ListGroup.Item>
       </ListGroup>
       <Card.Body>

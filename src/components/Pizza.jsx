@@ -6,11 +6,16 @@ import { useState, useEffect } from 'react';
 
 const Pizza = () => {
     const [cartaPizza, setCartaPizza] = useState ([])
-        console.log('componente montado')
-      const getCartaPizza = async () => {
-        const response = await fetch ('http://localhost:5000/api/pizzas/p001')
-        const data = await response.json()
-        setCartaPizza([data])
+    
+        const getCartaPizza = async () => {
+          try {
+          const response = await fetch ('http://localhost:5000/api/pizzas/p001')
+          const data = await response.json()
+          setCartaPizza([data])
+            
+          } catch (error) {
+            console.error(error)
+          }
       }
     
       useEffect(()=> {

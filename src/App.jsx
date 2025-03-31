@@ -11,9 +11,9 @@ function App() {
   return (
     <>
     <Navbar/>
-    {/* <Home/>  */}
+    <Home/> 
     {/* <Carts/> */}
-    <Pizza/>
+    {/* <Pizza/> */}
     <Footer/>
    
 

@@ -1,63 +1,102 @@
-import React from "react";
+import React, { useState } from 'react';
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { useState } from "react";
-import RegisterModal from "./RegisterModal";
 
-const Register = ({ showRegister, handleCloseRegister }) => {
-  const [emailRegister, setEmailRegister] = useState("");
-  const [passwordRegister, setPasswordRegister] = useState("");
-  const [errorRegister, setErrorRegister] = useState(false);
-  const [smShowRegister, setSmShowRegister] = useState(false);
 
-  const handleSubmitRegister = (e) => {
+const Register = () => {
+  const [emailRegisterr, setEmailRegisterr] = useState("");
+  const [passwordRegisterr, setPasswordRegisterr] = useState("");
+  const [errorRegisterr, setErrorRegisterr] = useState(false);
+   const [showRegisterr, setShowRegisterr] = useState(false);
+ 
+
+  const handleSubmitRegisterr = (e) => {
     e.preventDefault();
-    if (emailRegister === "") {
-      setErrorRegister(true);
+    if (emailRegisterr === "") {
+      setErrorRegisterr(true);
       return;
     }
 
-    if (passwordRegister === "" || passwordRegister.length < 6) {
-      setErrorRegister(true);
+    if (passwordRegisterr === "" || passwordRegisterr.length < 6) {
+      setErrorRegisterr(true);
       return;
     }
 
-    setErrorRegister(false);
-    setEmailRegister("");
-    setPasswordRegister("");
-    handleCloseRegister(); // Cierra el modal
-    setSmShowRegister(true);
-    showRegister();
+    setErrorRegisterr(false);
+    setEmailRegisterr("");
+    setPasswordRegisterr("");
     console.log("Formulario enviado");
   };
 
+  const handleChangeEmailRegisterr = (e) => {
+    setEmailRegisterr(e.target.value);
+  };
+
+  const handleChangeContraseñaRegisterr = (e) => {
+    setPasswordRegisterr(e.target.value);
+  };
+
+  const handleCloseRegisterr = () => {
+    setShowRegisterr(false);
+  };
+
+ 
+  const handleShowRegisterr = () => setShowRegisterr(true);
+
+
   return (
     <div>
-      <RegisterModal
-        showRegister={showRegister}
-        handleCloseRegister={handleCloseRegister}
-        handleSubmitRegister={handleSubmitRegister}
-        emailRegister={emailRegister}
-        passwordRegister={passwordRegister}
-        handleChangeEmailRegister={(e) => setEmailRegister(e.target.value)}
-        handleChangePasswordRegister={(e) =>
-          setPasswordRegister(e.target.value)
-        }
-        errorRegister={errorRegister}
-      />
+      {errorRegisterr ? (
+              <p className="text-danger">
+                Todos los campos son obligarotios (no pueden estar vacíos)
+              </p>
+            ) : null}
+            <form action="submit" onSubmit={handleSubmitRegisterr}>
+            <Form.Group className="mb-3" controlId="FormMail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="nombre.apellido@ejemplo.com"
+                value={emailRegisterr}
+                onChange={(e) => handleChangeEmailRegisterr(e)}
+              />
+              <Form.Text className="text-muted">
+                Nunca compartiremos su email con nadie.
+              </Form.Text>
+            </Form.Group>
 
-      <Modal
-        size="sm"
-        show={smShowRegister}
-        onHide={() => setSmShowRegister(false)}
-        aria-labelledby="example-modal-sizes-title-sm"
-      >
+            <Form.Group className="mb-3" controlId="FormContraseña">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Ingrese su contraseña"
+                value={passwordRegisterr}
+                onChange={(e) => handleChangeContraseñaRegisterr(e)}
+              />
+            </Form.Group>
+            {passwordRegisterr && passwordRegisterr.length < 6 ? (
+              <p className="text-danger">
+                La contraseña debe tener al menos 6 caracteres
+              </p>
+            ) : null}
+
+        <Button variant="primary" type="submit" onClick={handleShowRegisterr}>
+        Enviar
+       </Button>
+       <Modal show={showRegisterr} onHide={handleCloseRegisterr}>
         <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-sm">
-            Registro Exitoso
-          </Modal.Title>
+          <Modal.Title> Registro exitoso </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Pizzeria Mamma Mia 🍕</Modal.Body>
+        <Modal.Body> Pizzeria Mamma Mia  🍕</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseRegisterr}>
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
+        </form>
+        
     </div>
   );
 };

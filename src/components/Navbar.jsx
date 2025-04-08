@@ -5,7 +5,8 @@ import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Login from "./Login";
+import { Link } from "react-router";
+
 
 const NavBar = () => {
   const total = 25000;
@@ -115,7 +116,7 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">🍕Home</Nav.Link>
+              <Link className="text-decoration-none p-2" to="/">🍕Home</Link>
               {token ? (
                 <>
                   <Nav.Link eventKey="profile" href="#link">
@@ -127,28 +128,30 @@ const NavBar = () => {
                 </>
               ) : (
                 <>
-                  <Nav.Link eventKey="login" href="#Login" onClick={handleShow}>
+                
+                  <Link className="text-decoration-none p-2" eventKey="login" to="/login" onClick={handleShow}>
                     🔐Login
-                  </Nav.Link>
-                  <Nav.Link
+                  </Link>
+                  <Link
+                    className="text-decoration-none p-2"
                     eventKey="register"
-                    href="#Register"
+                    to="/register"
                     onClick={handleShowRegister}
                   >
                     🔐Register
-                  </Nav.Link>
+                  </Link>
+                
                 </>
               )}
             </Nav>
             <Nav className="ml-auto">
-              <Nav.Link eventKey="total" href="#link">
+              <Link eventKey="total" to="/carts">
                 🛒Total: ${total.toLocaleString()}
-              </Nav.Link>
+              </Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Login />
 
       {/* COMPONENTE LOGIN */}
       <Modal show={show} onHide={handleClose}>
@@ -302,7 +305,7 @@ const NavBar = () => {
                 Registro Exitoso
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body>Pizzeria Mamma Mia 🍕</Modal.Body>
+            <Modal.Body>Piazzeria Mamma Mia 🍕</Modal.Body>
           </Modal>
         </div>
       </div>

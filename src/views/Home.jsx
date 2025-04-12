@@ -1,47 +1,32 @@
 import Header from '../components/Header'
 import CardPizza from '../components/CardPizza';
-// import { pizzas } from '../../pizzas'; // HITO 3
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Pizza from '../components/Pizza';
+import { MyContext } from '../context/MyContext';
 
 export default function Home() {
-    
-  // const array = (pizzas) // HITO 3
-  const [cartaPizza, setCartaPizza] = useState ([])
- 
-    const getCartaPizza = async () => {
-      try {
-        const response = await fetch ('http://localhost:5000/api/pizzas')
-        const data = await response.json()
-        setCartaPizza([...data])
-      } catch (error) {
-        console.error(error)
-      }
-  }
 
-  useEffect(()=> {
-    getCartaPizza()},[]
-  )
+  const { cartaPizza } = useContext(MyContext)
 
   return (
     <div>
     <Header/>
     <div className='cards container d-flex justify-content-center flex-wrap mt-4'>
-    <Row xs={1} md={3}>
-    {cartaPizza.map((item) => (
-    <Col key={item.id}> 
     
-    <CardPizza 
+    {cartaPizza.map((item) => (
+    <div key={item.id}>
+    
+    <CardPizza product={cartaPizza}
     name={item.name}
     price={item.price}
     ingredients={item.ingredients}
     img={item.img}
     />
-    </Col>
+    </div>
     ))}
-    </Row>
+    
     </div>
     </div>
   );

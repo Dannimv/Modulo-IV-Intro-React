@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <div>
     
-    <h2>Perfil de usuario</h2>
+    <h2 eventkey='perfil'>Perfil de usuario</h2>
     <p>Email: nombre@ejemplo.com</p>
     
 

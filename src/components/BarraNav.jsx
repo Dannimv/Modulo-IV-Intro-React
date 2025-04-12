@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router";
 
 
-const NavBar = () => {
+const BarraNav = () => {
   const total = 25000;
   const token = false;
 
@@ -313,4 +313,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default BarraNav;

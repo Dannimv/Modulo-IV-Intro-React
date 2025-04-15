@@ -133,13 +133,12 @@ const BarraNav = () => {
               ) : (
                 <>
                 
-                  <Link className="text-decoration-none p-2" eventKey="login" to="/login" onClick={handleShow}>
+                  <Link className="text-decoration-none p-2" eventKey="login" onClick={handleShow}>
                     🔐Login
                   </Link>
                   <Link
                     className="text-decoration-none p-2"
                     eventKey="register"
-                    to="/register"
                     onClick={handleShowRegister}
                   >
                     🔐Register

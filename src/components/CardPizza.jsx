@@ -4,7 +4,6 @@ import { CartContext } from '../context/CartContext';
 import { useContext } from 'react';
 import { useState, useEffect } from 'react';
 
-
 const CardPizza = () => {
   const {cart, setCart} = useContext(CartContext);
   const [cartaPizza, setCartaPizza] = useState([]);

@@ -19,13 +19,10 @@ const Carts = () => {
         }
     }
 
-
     const handleChange = (e) => {
         e.preventDefault
         setCart(e.target.value)
     }
-
-
 
     return (
     <>

@@ -1,12 +1,12 @@
 import { createContext } from "react";
 import { useState, useEffect } from "react";
-import { pizzaCart } from '../../pizzas'
+import { pizzas } from '../../pizzas'
 
 export const CartContext = createContext()
 
 const GlobalProvider = ({children}) => {
 
-        const [cart, setCart] = useState(pizzaCart);
+        const [cart, setCart] = useState([]);
         const [total, setTotal] = useState(0)
          
           let agregarPizza = (id, precio) => {

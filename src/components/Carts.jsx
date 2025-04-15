@@ -1,54 +1,31 @@
-import React from 'react'
-import { useState } from 'react'
-import { pizzaCart } from '../../pizzas'
+import React, { useContext } from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import CardImg from 'react-bootstrap/esm/CardImg';
-import CardBody from 'react-bootstrap/esm/CardBody';
+import { CartContext } from '../context/CartContext';
 
 const Carts = () => {
-    const [cart, setCart] = useState(pizzaCart);
-    const [total, setTotal] = useState(0)
-    let agregarPizza = (id, precio) => {
-        setCart (cart.map((pizza) => {
-            if (pizza.id === id) {
-                return {...pizza, 
-                    cantidadPizza: (pizza.cantidadPizza ?? 0) + 1,
-                    total: precio * ((pizza.cantidadPizza ?? 0) + 1)}
-            }
-            sumarTotal()
-            return pizza;
-        }))
+    const {cart, setCart, agregarPizza, eliminarPizza, sumarTotal} = useContext(CartContext)
+    
+    const eliminarPizzaCarrito = (id) => {
+        const itemEliminado = cart.find(item => item.id === id);
+        if (itemEliminado && itemEliminado.cantidadPizza > 1) {
+            eliminarPizza(id);
+        } else if (itemEliminado && itemEliminado.cantidadPizza <=1) {
+            const itemAgregado = cart.filter(item => item.id !== id);
+            setCart(itemAgregado)
+        }
     }
 
-
-    let eliminarPizza = (id, precio) => {
-        setCart (cart.map((pizza) => {
-            if (pizza.id === id) {
-                return {...pizza, 
-                    cantidadPizza: (pizza.cantidadPizza ?? 0) - 1,
-                    total: precio * ((pizza.cantidadPizza ?? 0) - 1)}
-            }
-            sumarTotal()
-            return pizza;
-        }));
-    }
-
-    const sumarTotal = () => {
-        return cart.reduce((acc, el) => {
-            return acc + el.total;
-        }, 0)
-        
-        console.log(total)
-    }
 
     const handleChange = (e) => {
         e.preventDefault
         setCart(e.target.value)
     }
+
+
 
     return (
     <>
@@ -80,19 +57,15 @@ const Carts = () => {
                 <Col className='my-5'>
                 <Row>
                 <div className='d-flex'>
-                <Button variant="primary" size="lg" onClick={() => agregarPizza(carta.id, carta.price)}>+</Button>
+                <Button variant="primary" size="lg" onClick={() => eliminarPizzaCarrito(carta.id, carta.price)}>-</Button>
                 <input className='text-center' type="number" value={carta.cantidadPizza??0} onChange={handleChange} />
-                <Button variant="danger" size="lg" onClick={() => eliminarPizza(carta.id, carta.price)}>-</Button>
+                <Button variant="danger" size="lg" onClick={() => agregarPizza(carta.id, carta.price)}>+</Button>
                 </div>
 
                 </Row>
 
                 </Col>
                
-                <Col>
-                <span> Subtotal $ {carta.total ?? 0} </span>
-
-                </Col>
 
             </Row>
 
@@ -102,7 +75,7 @@ const Carts = () => {
             </Card>
             ))}
 
-            <h3 className='my-3 text-center'>Total${cart.reduce((acc, el) => acc + (el.total || 0), 0)}</h3>
+            <h3 className='my-3 text-center'>Total${sumarTotal()}</h3>
       </Container>
     </>
   )

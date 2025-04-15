@@ -2,14 +2,17 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/NavBar";
 import Modal from "react-bootstrap/Modal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router";
+import { CartContext } from "../context/CartContext";
+
 
 
 const BarraNav = () => {
-  const total = 25000;
+ 
+  const total = useContext(CartContext).sumarTotal();
   const token = false;
 
   const [show, setShow] = useState(false);
@@ -23,6 +26,7 @@ const BarraNav = () => {
   const [errorRegister, setErrorRegister] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [smShowRegister, setSmShowRegister] = useState(false);
+  
 
   // Funciones Login
   const handleSubmit = (e) => {
@@ -145,8 +149,8 @@ const BarraNav = () => {
               )}
             </Nav>
             <Nav className="ml-auto">
-              <Link eventKey="total" to="/carts">
-                🛒Total: ${total.toLocaleString()}
+              <Link eventKey="total" className="total" to="/carts">
+                🛒Total:$ {total.toLocaleString()}
               </Link>
             </Nav>
           </Navbar.Collapse>

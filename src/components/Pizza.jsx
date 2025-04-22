@@ -3,13 +3,15 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 
 const Pizza = () => {
     const [cartaPizza, setCartaPizza] = useState ([])
+    const { id } = useParams()
     
         const getCartaPizza = async () => {
           try {
-          const response = await fetch ('http://localhost:5000/api/pizzas/p001')
+          const response = await fetch (`http://localhost:5000/api/pizzas/${id}`)
           const data = await response.json()
           setCartaPizza([data])
             
@@ -19,7 +21,7 @@ const Pizza = () => {
       }
     
       useEffect(()=> {
-        getCartaPizza()},[]
+        getCartaPizza()},[id]
       )
       console.log(cartaPizza)
     

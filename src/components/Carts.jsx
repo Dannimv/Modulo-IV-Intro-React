@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 import { CartContext } from '../context/CartContext';
 
 const Carts = () => {
-    const {cart, setCart, agregarPizza, eliminarPizza, sumarTotal} = useContext(CartContext)
+    const {cart, setCart, agregarPizza, eliminarPizza, sumarTotal, token, setToken} = useContext(CartContext)
     
     const eliminarPizzaCarrito = (id) => {
         const itemEliminado = cart.find(item => item.id === id);
@@ -22,6 +22,12 @@ const Carts = () => {
     const handleChange = (e) => {
         e.preventDefault
         setCart(e.target.value)
+    }
+
+    const handlePay = (e) => {
+        e.preventDefault
+        console.log('boton funcionando')
+       
     }
 
     return (
@@ -73,9 +79,14 @@ const Carts = () => {
             ))}
 
             <h3 className='my-3 text-center'>Total${sumarTotal()}</h3>
-      </Container>
-    </>
-  )
+            <div className='d-flex justify-content-end'>
+            <Button variant="success" size="lg" disabled = {token ? false : true}  onClick={handlePay}>Pagar 💸</Button>
+            </div>
+      </Container> 
+    
+    </> 
+    
+  ) 
 }
 
 export default Carts

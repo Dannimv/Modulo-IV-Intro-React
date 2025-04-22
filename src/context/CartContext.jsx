@@ -8,6 +8,7 @@ const GlobalProvider = ({children}) => {
 
         const [cart, setCart] = useState([]);
         const [total, setTotal] = useState(0)
+        const [token, setToken] = useState(true)
          
           let agregarPizza = (id, precio) => {
             setCart (cart.map((pizza) => {
@@ -50,6 +51,8 @@ const GlobalProvider = ({children}) => {
                 agregarPizza,
                 eliminarPizza,
                 sumarTotal,
+                token,
+                setToken,
             }} >
                 {children}
             </CartContext.Provider>

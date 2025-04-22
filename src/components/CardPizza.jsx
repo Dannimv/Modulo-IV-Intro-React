@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { CartContext } from '../context/CartContext';
 import { useContext } from 'react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 
 const CardPizza = () => {
   const {cart, setCart} = useContext(CartContext);
@@ -53,7 +54,7 @@ const CardPizza = () => {
       <Card.Text className='text-center'>
       <strong>Precio: ${item.price.toLocaleString()}</strong></Card.Text>
       <div className='d-flex justify-content-between'>
-      <Button variant="primary">Ver mas 👀</Button>
+      <Link to={`/pizza/${item.id}`} className="btn btn-success me-2"type="button">Ver mas 👀</Link>
       <Button variant="primary" className='cesta' onClick={() => agregarItem(item.id)}>Añadir 🛒</Button>
       </div>
     </Card.Body>

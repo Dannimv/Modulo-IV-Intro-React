@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { CartContext } from "../context/CartContext";
 
 
@@ -13,7 +13,7 @@ import { CartContext } from "../context/CartContext";
 const BarraNav = () => {
  
   const total = useContext(CartContext).sumarTotal();
-  const token = false;
+  const { token, setToken } = useContext(CartContext);
 
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -112,6 +112,14 @@ const BarraNav = () => {
     setShowRegister(false);
   };
 
+  // Funcion logOut
+
+  const navegar = useNavigate()
+  const handleLogout = () => {
+    setToken(false);
+    navegar('/');
+  }
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary sticky-top">
@@ -121,16 +129,20 @@ const BarraNav = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Link className="text-decoration-none p-2" to="/">🍕Home</Link>
-              {token ? (
+              {token && 
                 <>
-                  <Nav.Link eventKey="profile" href="#link">
+                  <Link eventKey="profile" href="#link" to='/profile' className="text-decoration-none p-2">
                     🔓Profile
-                  </Nav.Link>
-                  <Nav.Link eventKey="logout" href="#link">
+                  </Link>
+                  <Link to='/Login' eventKey="logout" href="#link" className="text-danger text-decoration-none p-2 font-weight-bold" onClick={() => {
+                        handleLogout();
+                      }}
+                    >
+                      <i class="fa-solid fa-right-from-bracket"></i>{" "}
                     🔒Logout
-                  </Nav.Link>
-                </>
-              ) : (
+                  </Link>
+                </>}
+               {!token && (
                 <>
                 
                   <Link className="text-decoration-none p-2" eventKey="login" onClick={handleShow}>

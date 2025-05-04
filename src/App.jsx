@@ -1,13 +1,13 @@
 import "./App.css";
 import Home from "./views/Home";
 import Footer from "./components/Footer";
-import Carts from "./components/Carts";
-import Pizza from "./components/Pizza";
+import Carts from "./views/Carts";
+import Pizza from "./views/Pizza";
 import { Navigate, Route, Routes } from "react-router";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./views/Login";
+import Register from "./views/Register";
 import NotFound from "./views/NotFound";
-import Profile from "./components/Profile";
+import Profile from "./views/Profile";
 import BarraNav from "./components/BarraNav";
 import { useContext } from "react";
 import GlobalProvider, { CartContext } from "./context/CartContext";

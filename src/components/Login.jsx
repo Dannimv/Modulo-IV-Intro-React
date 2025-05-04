@@ -1,53 +1,75 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { useNavigate } from 'react-router';
+import { CartContext } from '../context/CartContext';
 
 
 const Login = () => {
-  const [emailLogin, setEmailLogin] = useState("");
-  const [contraseñaLogin, setContraseñaLogin] = useState("");
-  const [confirmarContraseñaLogin, setConfirmarContraseñaLogin] = useState("");
-  const [errorLogin, setErrorLogin] = useState(false);
+  const {setUser, setToken} = useContext(CartContext)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmarPassword, setConfirmarPassword] = useState("");
+  const [error, setError] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const navegar = useNavigate()
   
-    const handleSubmitLogin = (e) => {
+    const handleSubmitLogin = async (e) => {
       e.preventDefault();
-      if (emailLogin === "") {
-        setErrorLogin(true);
+
+      if (email === "") {
+        setError(true);
         return;
       }
   
-      if (contraseñaLogin === "" || contraseñaLogin.length < 6) {
-        setErrorLogin(true);
+      if (password === "" || password.length < 6) {
+        setError(true);
         return;
       }
   
-      if (confirmarContraseñaLogin === "" || confirmarContraseñaLogin!== contraseñaLogin) {
-        setErrorLogin(true);
+      if (confirmarPassword === "" || confirmarPassword !== password) {
+        setError(true);
         return;
       }
-  
-      console.log(confirmarContraseñaLogin);
-      console.log(contraseñaLogin);
-  
-      setErrorLogin(false);
-      setEmailLogin("");
-      setContraseñaLogin("");
-      setConfirmarContraseñaLogin("");
+      
+      setError(false);
+      setEmail("");
+      setPassword("");
+      setConfirmarPassword(""); 
+      
+    
+      const res = await fetch("http://localhost:5000/api/auth/login", 
+        {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ email, password }),
+        });
+        
+        const data = await res.json();
+        alert(data?.error || " Inicio de sesion exitoso 🦄");
+        localStorage.setItem("token", data.token);
+
+        setUser({ email });
+        setToken(data.token);
+        localStorage.setItem("user", JSON.stringify({ email }));
+        localStorage.setItem("token", data.token);
+      
       console.log("Formulario enviado");
     };
+   
+    
   
     const handleChangeEmailLogin = (e) => {
-      setEmailLogin(e.target.value);
+      setEmail(e.target.value);
     };
   
     const handleChangeContraseñaLogin = (e) => {
-      setContraseñaLogin(e.target.value);
+      setPassword(e.target.value);
     };
   
     const handleChangeConfirmarContraseñaLogin = (e) => {
-      setConfirmarContraseñaLogin(e.target.value);
+      setConfirmarPassword(e.target.value);
     };
 
     const handleCloseLogin = () => {
@@ -59,7 +81,7 @@ const Login = () => {
   
     return (
         <>
-       {errorLogin ? (
+       {error ? (
               <p className="text-danger">
                 Todos los campos son obligarotios (no pueden estar vacíos)
               </p>
@@ -70,7 +92,7 @@ const Login = () => {
               <Form.Control
                 type="email"
                 placeholder="nombre.apellido@ejemplo.com"
-                value={emailLogin}
+                value={email}
                 onChange={(e) => handleChangeEmailLogin(e)}
               />
               <Form.Text className="text-muted">
@@ -83,11 +105,11 @@ const Login = () => {
               <Form.Control
                 type="password"
                 placeholder="Ingrese su contraseña"
-                value={contraseñaLogin}
+                value={password}
                 onChange={(e) => handleChangeContraseñaLogin(e)}
               />
             </Form.Group>
-            {contraseñaLogin && contraseñaLogin.length < 6 ? (
+            {password && password.length < 6 ? (
               <p className="text-danger">
                 La contraseña debe tener al menos 6 caracteres
               </p>
@@ -98,17 +120,17 @@ const Login = () => {
               <Form.Control
                 type="password"
                 placeholder="Ingrese su contraseña"
-                value={confirmarContraseñaLogin}
+                value={confirmarPassword}
                 onChange={(e) => handleChangeConfirmarContraseñaLogin(e)}
               />
             </Form.Group>
-            {contraseñaLogin !== confirmarContraseñaLogin ? (
+            {password !== confirmarPassword ? (
               <p className="text-danger">
                 Las contraseñas no coinciden, intente nuevamente
               </p>
             ) : null}
         <Button variant="primary" type="submit" onClick={handleShowLogin}>
-        Enviar
+       Ingresar
        </Button>
        <Modal show={showLogin} onHide={handleCloseLogin}>
         <Modal.Header closeButton>

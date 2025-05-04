@@ -1,40 +1,89 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { CartContext } from '../context/CartContext';
+import { useNavigate } from 'react-router';
 
 
 const Register = () => {
-  const [emailRegisterr, setEmailRegisterr] = useState("");
-  const [passwordRegisterr, setPasswordRegisterr] = useState("");
-  const [errorRegisterr, setErrorRegisterr] = useState(false);
-   const [showRegisterr, setShowRegisterr] = useState(false);
+  const {setUser, setToken} = useContext(CartContext)
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [error, setError] = useState(false);
+  const [showRegisterr, setShowRegisterr] = useState(false);
+  const navegar = useNavigate();
+   
  
 
-  const handleSubmitRegisterr = (e) => {
+  const handleSubmitRegisterr = async (e) => {
     e.preventDefault();
-    if (emailRegisterr === "") {
+    if (email === "") {
       setErrorRegisterr(true);
       return;
     }
 
-    if (passwordRegisterr === "" || passwordRegisterr.length < 6) {
+    if (password === "" || password.length < 6) {
+      setErrorRegisterr(true);
+      return;
+    }
+    if (password2 === "" || password2.length < 6) {
       setErrorRegisterr(true);
       return;
     }
 
-    setErrorRegisterr(false);
-    setEmailRegisterr("");
-    setPasswordRegisterr("");
+    if (password !== password2) {
+      setErrorRegisterr(true);
+      return;
+    }
+    else {
+      setUser({
+        username: email,
+        password: password
+      })
+    
+    }
+
+    const res = await fetch("http://localhost:5000/api/auth/register", 
+      {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ username: email, password }),
+      });
+      
+      const data = await res.json();
+      alert(data?.error || " Registro exitoso 🦄");
+      localStorage.setItem("token", data.token);
+
+    
+
+    const newUser = { username, email};
+
+    
+    setUser(newUser);
+    setToken(true);
+    localStorage.setItem('user', JSON.stringify(newUser));
+
+    navegar("/");
+
+    setError(false);
+    setEmail("");
+    setPassword("");
     console.log("Formulario enviado");
   };
 
   const handleChangeEmailRegisterr = (e) => {
-    setEmailRegisterr(e.target.value);
+    setEmail(e.target.value);
   };
 
   const handleChangeContraseñaRegisterr = (e) => {
-    setPasswordRegisterr(e.target.value);
+    setPassword(e.target.value);
+  };
+
+  const handleChangePassword2 = (e) => {
+    setPassword2(e.target.value);
   };
 
   const handleCloseRegisterr = () => {
@@ -47,7 +96,7 @@ const Register = () => {
 
   return (
     <div>
-      {errorRegisterr ? (
+      {error ? (
               <p className="text-danger">
                 Todos los campos son obligarotios (no pueden estar vacíos)
               </p>
@@ -58,7 +107,7 @@ const Register = () => {
               <Form.Control
                 type="email"
                 placeholder="nombre.apellido@ejemplo.com"
-                value={emailRegisterr}
+                value={email}
                 onChange={(e) => handleChangeEmailRegisterr(e)}
               />
               <Form.Text className="text-muted">
@@ -71,18 +120,32 @@ const Register = () => {
               <Form.Control
                 type="password"
                 placeholder="Ingrese su contraseña"
-                value={passwordRegisterr}
+                value={password}
                 onChange={(e) => handleChangeContraseñaRegisterr(e)}
               />
             </Form.Group>
-            {passwordRegisterr && passwordRegisterr.length < 6 ? (
+            {password && password.length < 6 ? (
+              <p className="text-danger">
+                La contraseña debe tener al menos 6 caracteres
+              </p>
+            ) : null}
+            <Form.Group className="mb-3" controlId="FormContraseña2">
+              <Form.Label>Repita la contraseña</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Ingrese su contraseña"
+                value={password2}
+                onChange={(e) => handleChangePassword2(e)}
+              />
+            </Form.Group>
+            {password2 && password2.length < 6 ? (
               <p className="text-danger">
                 La contraseña debe tener al menos 6 caracteres
               </p>
             ) : null}
 
         <Button variant="primary" type="submit" onClick={handleShowRegisterr}>
-        Enviar
+        Registrarse
        </Button>
        <Modal show={showRegisterr} onHide={handleCloseRegisterr}>
         <Modal.Header closeButton>

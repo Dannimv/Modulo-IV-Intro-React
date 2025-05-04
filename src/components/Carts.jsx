@@ -1,10 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { CartContext } from '../context/CartContext';
+import axios from 'axios';
+import Swal from 'sweetalert2'
 
 const Carts = () => {
     const {cart, setCart, agregarPizza, eliminarPizza, sumarTotal, token, setToken} = useContext(CartContext)
@@ -25,11 +27,39 @@ const Carts = () => {
     }
 
     const handlePay = (e) => {
-        e.preventDefault
-        console.log('boton funcionando')
-       
+        e.preventDefault()
+        if (token) {
+            Swal.fire({
+                title: "Compra realiza con éxito! 🍕",
+                icon: "success",
+                draggable: true
+              }); 
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Debes iniciar sesión para pagar"
+              } );
+        }
     }
 
+  
+
+   
+    const sendCart = async (checkouts) => {
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/checkouts', { 
+        cart: Carts, }
+      , { headers: {
+        Authorization: `Bearer token_jwt`,
+      }, 
+      body: JSON.stringify({
+        cart: Carts
+      })})
+    
+    } catch (error) {
+      console.error(error)
+    }} 
     return (
     <>
       <Container>
@@ -80,7 +110,7 @@ const Carts = () => {
 
             <h3 className='my-3 text-center'>Total${sumarTotal()}</h3>
             <div className='d-flex justify-content-end'>
-            <Button variant="success" size="lg" disabled = {token ? false : true}  onClick={handlePay}>Pagar 💸</Button>
+            <Button variant="success" size="lg" onClick={handlePay}>Pagar 💸</Button>
             </div>
       </Container> 
     

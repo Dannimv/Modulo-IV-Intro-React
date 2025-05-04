@@ -9,6 +9,8 @@ const GlobalProvider = ({children}) => {
         const [cart, setCart] = useState([]);
         const [total, setTotal] = useState(0)
         const [token, setToken] = useState(true)
+        const [user, setUser] = useState(null)
+   
          
           let agregarPizza = (id, precio) => {
             setCart (cart.map((pizza) => {
@@ -36,11 +38,22 @@ const GlobalProvider = ({children}) => {
 
           const sumarTotal = () => {
             return cart.reduce((acc, el) => {
-                return (acc + (el.price * (el.cantidadPizza || 0)))}, 0)
-                
-            console.log(total)
+            return (acc + (el.price * (el.cantidadPizza || 0)))}, 0)
+            
         };
 
+        useEffect(() => {
+            const usuario = localStorage.getItem("user");
+            if (usuario) {
+              setUser(JSON.parse(usuario));
+              setToken(true);
+            } else {
+              setUser(null);
+              setToken(false);
+            }
+          }, []);
+
+    
         return (
             <CartContext.Provider
             value={{
@@ -53,6 +66,8 @@ const GlobalProvider = ({children}) => {
                 sumarTotal,
                 token,
                 setToken,
+                user,
+                setUser
             }} >
                 {children}
             </CartContext.Provider>

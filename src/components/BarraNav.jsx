@@ -13,7 +13,7 @@ import { CartContext } from "../context/CartContext";
 const BarraNav = () => {
  
   const total = useContext(CartContext).sumarTotal();
-  const { token, setToken } = useContext(CartContext);
+  const { token, setToken, setUser } = useContext(CartContext);
 
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -27,7 +27,6 @@ const BarraNav = () => {
   const [showRegister, setShowRegister] = useState(false);
   const [smShowRegister, setSmShowRegister] = useState(false);
   
-
   // Funciones Login
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,9 +44,6 @@ const BarraNav = () => {
       setError(true);
       return;
     }
-
-    console.log(confirmarContraseña);
-    console.log(contraseña);
 
     setError(false);
     setEmail("");
@@ -112,13 +108,17 @@ const BarraNav = () => {
     setShowRegister(false);
   };
 
-  // Funcion logOut
 
   const navegar = useNavigate()
-  const handleLogout = () => {
+  
+  const handleLogOut = () => {
+    setUser(null);
+    localStorage.removeItem('user');
     setToken(false);
-    navegar('/');
+    localStorage.removeItem('token')
+    navegar('/login');
   }
+
 
   return (
     <>
@@ -134,24 +134,25 @@ const BarraNav = () => {
                   <Link eventKey="profile" href="#link" to='/profile' className="text-decoration-none p-2">
                     🔓Profile
                   </Link>
-                  <Link to='/Login' eventKey="logout" href="#link" className="text-danger text-decoration-none p-2 font-weight-bold" onClick={() => {
-                        handleLogout();
+                  <Link to='/login' eventKey="logout" href="#link" className="text-danger text-decoration-none p-2 font-weight-bold" onClick={() => {
+                        handleLogOut();
                       }}
                     >
-                      <i class="fa-solid fa-right-from-bracket"></i>{" "}
+                      <i className="fa-solid fa-right-from-bracket"></i>{" "}
                     🔒Logout
                   </Link>
+                  
                 </>}
                {!token && (
                 <>
                 
-                  <Link className="text-decoration-none p-2" eventKey="login" onClick={handleShow}>
+                  <Link to='/Login' className="text-decoration-none p-2" eventKey="login">
                     🔐Login
                   </Link>
-                  <Link
+                  <Link to='/Register'
                     className="text-decoration-none p-2"
                     eventKey="register"
-                    onClick={handleShowRegister}
+                    
                   >
                     🔐Register
                   </Link>
@@ -177,7 +178,7 @@ const BarraNav = () => {
           <Modal.Body>
             {error ? (
               <p className="text-danger">
-                Todos los campos son obligarotios (no pueden estar vacíos)
+                Todos los campos son obligatorios (no pueden estar vacíos)
               </p>
             ) : null}
 

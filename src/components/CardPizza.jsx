@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 
 const CardPizza = () => {
-  const {cart, setCart} = useContext(CartContext);
+  const {cart, setCart, setUser} = useContext(CartContext);
   const [cartaPizza, setCartaPizza] = useState([]);
 
   const getCartaPizza = async () => {
@@ -16,7 +16,8 @@ const CardPizza = () => {
   };
 
   useEffect(() => {
-      getCartaPizza();
+    setUser(JSON.parse(localStorage.getItem("user")) || null)
+    getCartaPizza();
   }, []);
 
   const agregarItem = (itemId) => {

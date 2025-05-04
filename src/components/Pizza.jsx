@@ -21,6 +21,7 @@ const Pizza = () => {
       }
     
       useEffect(()=> {
+        setUser(JSON.parse(localStorage.getItem("user")) || null)
         getCartaPizza()},[id]
       )
       console.log(cartaPizza)
